@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Ventas - Sistema de Gestión de Concesionario{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Lista de Ventas</h2>
+        <a href="{{ url_for('main.crear_venta') }}" class="btn">Registrar Venta</a>
+    </div>
+    
+    <table class="mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Vehículo</th>
+                <th>Cliente</th>
+                <th>Fecha de Venta</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+            <tr>
+                <td>{{ venta.id }}</td>
+                <td>{{ venta.vehiculo.marca }} {{ venta.vehiculo.modelo }}</td>
+                <td>{{ venta.cliente.nombre }}</td>
+                <td>{{ venta.fecha_venta.strftime('%d/%m/%Y %H:%M') }}</td>
+                <td>
+                    <a href="{{ url_for('main.detalles_venta', id=venta.id) }}" class="btn">Ver Detalles</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">No hay ventas registradas</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

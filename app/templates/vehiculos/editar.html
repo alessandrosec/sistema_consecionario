@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Vehículo - Sistema de Gestión de Concesionario{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h2>Editar Vehículo</h2>
+    
+    <form method="post">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.marca.label }}
+            {{ form.marca(class="form-control") }}
+            {% for error in form.marca.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.modelo.label }}
+            {{ form.modelo(class="form-control") }}
+            {% for error in form.modelo.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.anio.label }}
+            {{ form.anio(class="form-control") }}
+            {% for error in form.anio.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.precio.label }}
+            {{ form.precio(class="form-control") }}
+            {% for error in form.precio.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-check mt-3">
+            {{ form.disponibilidad(class="form-check-input") }}
+            {{ form.disponibilidad.label(class="form-check-label") }}
+        </div>
+        
+        <div class="mt-4">
+            {{ form.submit(class="btn") }}
+            <a href="{{ url_for('main.lista_vehiculos') }}" class="btn">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

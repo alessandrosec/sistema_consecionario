@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Detalles de Venta - Sistema de Gestión de Concesionario{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h2>Detalles de Venta #{{ venta.id }}</h2>
+    
+    <div class="card mt-3">
+        <div class="card-header">Información de la Venta</div>
+        <div class="card-body">
+            <p><strong>Fecha de Venta:</strong> {{ venta.fecha_venta.strftime('%d/%m/%Y %H:%M') }}</p>
+        </div>
+    </div>
+    
+    <div class="card mt-3">
+        <div class="card-header">Información del Vehículo</div>
+        <div class="card-body">
+            <p><strong>Marca:</strong> {{ venta.vehiculo.marca }}</p>
+            <p><strong>Modelo:</strong> {{ venta.vehiculo.modelo }}</p>
+            <p><strong>Año:</strong> {{ venta.vehiculo.anio }}</p>
+            <p><strong>Precio:</strong> ${{ "%.2f"|format(venta.vehiculo.precio) }}</p>
+        </div>
+    </div>
+    
+    <div class="card mt-3">
+        <div class="card-header">Información del Cliente</div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> {{ venta.cliente.nombre }}</p>
+            <p><strong>Número de Identificación:</strong> {{ venta.cliente.num_identificacion }}</p>
+            <p><strong>Correo:</strong> {{ venta.cliente.correo }}</p>
+            <p><strong>Teléfono:</strong> {{ venta.cliente.telefono }}</p>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('main.lista_ventas') }}" class="btn">Volver a la Lista</a>
+    </div>
+</div>
+{% endblock %}

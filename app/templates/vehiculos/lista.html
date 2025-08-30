@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Vehículos - Sistema de Gestión de Concesionario{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Lista de Vehículos</h2>
+        <a href="{{ url_for('main.crear_vehiculo') }}" class="btn">Agregar Vehículo</a>
+    </div>
+    
+    <div class="card mt-3">
+        <div class="card-header">Filtros</div>
+        <div class="card-body">
+            <form method="get" action="{{ url_for('main.lista_vehiculos') }}">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="marca">Marca:</label>
+                            <input type="text" class="form-control" id="marca" name="marca" value="{{ request.args.get('marca', '') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="modelo">Modelo:</label>
+                            <input type="text" class="form-control" id="modelo" name="modelo" value="{{ request.args.get('modelo', '') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="anio">Año:</label>
+                            <input type="number" class="form-control" id="anio" name="anio" value="{{ request.args.get('anio', '') }}">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn mt-3">Filtrar</button>
+            </form>
+        </div>
+    </div>
+    
+    <table class="mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Precio</th>
+                <th>Disponibilidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehiculo in vehiculos %}
+            <tr>
+                <td>{{ vehiculo.id }}</td>
+                <td>{{ vehiculo.marca }}</td>
+                <td>{{ vehiculo.modelo }}</td>
+                <td>{{ vehiculo.anio }}</td>
+                <td>{{ "%.2f"|format(vehiculo.precio) }}</td>
+                <td>{{ "Disponible" if vehiculo.disponibilidad else "Vendido" }}</td>
+                <td>
+                    <a href="{{ url_for('main.editar_vehiculo', id=vehiculo.id) }}" class="btn">Editar</a>
+                    {% if vehiculo.disponibilidad %}
+                    <a href="{{ url_for('main.eliminar_vehiculo', id=vehiculo.id) }}" class="btn" onclick="return confirm('¿Está seguro de eliminar este vehículo?')">Eliminar</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="text-center">No hay vehículos registrados</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Venta - Sistema de Gestión de Concesionario{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h2>Registrar Nueva Venta</h2>
+    
+    {% if not form.vehiculo_id.choices %}
+    <div class="alert alert-warning">
+        No hay vehículos disponibles para la venta. <a href="{{ url_for('main.crear_vehiculo') }}">Agregar un vehículo</a>
+    </div>
+    {% elif not form.cliente_id.choices %}
+    <div class="alert alert-warning">
+        No hay clientes registrados. <a href="{{ url_for('main.crear_cliente') }}">Agregar un cliente</a>
+    </div>
+    {% else %}
+    <form method="post">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.vehiculo_id.label }}
+            {{ form.vehiculo_id(class="form-control") }}
+            {% for error in form.vehiculo_id.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.cliente_id.label }}
+            {{ form.cliente_id(class="form-control") }}
+            {% for error in form.cliente_id.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        
+        <div class="mt-4">
+            {{ form.submit(class="btn") }}
+            <a href="{{ url_for('main.lista_ventas') }}" class="btn">Cancelar</a>
+        </div>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

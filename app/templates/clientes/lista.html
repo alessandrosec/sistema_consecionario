@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Clientes - Sistema de Gestión de Concesionario{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Lista de Clientes</h2>
+        <a href="{{ url_for('main.crear_cliente') }}" class="btn">Agregar Cliente</a>
+    </div>
+    
+    <div class="card mt-3">
+        <div class="card-header">Filtros</div>
+        <div class="card-body">
+            <form method="get" action="{{ url_for('main.lista_clientes') }}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ request.args.get('nombre', '') }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="num_identificacion">Número de Identificación:</label>
+                            <input type="text" class="form-control" id="num_identificacion" name="num_identificacion" value="{{ request.args.get('num_identificacion', '') }}">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn mt-3">Filtrar</button>
+            </form>
+        </div>
+    </div>
+    
+    <table class="mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Número de Identificación</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.nombre }}</td>
+                <td>{{ cliente.num_identificacion }}</td>
+                <td>{{ cliente.correo }}</td>
+                <td>{{ cliente.telefono }}</td>
+                <td>
+                    <a href="{{ url_for('main.editar_cliente', id=cliente.id) }}" class="btn">Editar</a>
+                    <a href="{{ url_for('main.eliminar_cliente', id=cliente.id) }}" class="btn" onclick="return confirm('¿Está seguro de eliminar este cliente?')">Eliminar</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center">No hay clientes registrados</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

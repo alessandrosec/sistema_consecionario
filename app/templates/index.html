@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Sistema de Gestión de Concesionario{% endblock %}
+
+{% block content %}
+<div class="mt-4">
+    <h2>Bienvenido al Sistema de Gestión de Concesionario</h2>
+    <p>Este sistema le permite gestionar el inventario de vehículos, clientes y ventas de su concesionario.</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Vehículos</h5>
+                    <p class="card-text">Total: {{ vehiculos_count }}</p>
+                    <a href="{{ url_for('main.lista_vehiculos') }}" class="btn">Ver todos</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Clientes</h5>
+                    <p class="card-text">Total: {{ clientes_count }}</p>
+                    <a href="{{ url_for('main.lista_clientes') }}" class="btn">Ver todos</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas</h5>
+                    <p class="card-text">Total: {{ ventas_count }}</p>
+                    <a href="{{ url_for('main.lista_ventas') }}" class="btn">Ver todos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h3>Acciones rápidas</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="{{ url_for('main.crear_vehiculo') }}" class="btn">Agregar Vehículo</a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('main.crear_cliente') }}" class="btn">Agregar Cliente</a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('main.crear_venta') }}" class="btn">Registrar Venta</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
